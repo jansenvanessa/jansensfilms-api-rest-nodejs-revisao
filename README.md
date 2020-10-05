@@ -55,7 +55,7 @@ Queremos criar uma api para controlar os filmes que você quer assistir e que j�
 
 1. Filme: { 
    nome,
-   categoria,
+   genero,
    sinopse,
    assistido/ não assistido
    }
@@ -78,7 +78,7 @@ Nessa api queremos poder cadastrar séries, cada uma com inúmeras temporadas e 
 Série: 
 { 
    nome,
-   categoria,
+   genero,
    sinopse,
    temporadas:[
      {
