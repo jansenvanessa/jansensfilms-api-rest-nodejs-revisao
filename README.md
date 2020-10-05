@@ -49,11 +49,18 @@ O verbo PUT e o verbo PATCH são ambos utilizados quando queremos modificar um r
 
 <descrever o que é e fazer passo a passo para baixar>
 
-### PROJETO LISTA DE FILMES
+### PROJETO API DE FILMES
 
 Queremos criar uma api para controlar os filmes que você quer assistir e que já assistiu. Para isso, vamos primeiramente planejar nossa api:
 
-1. Rotas a serem criadas:
+1. Filme: { 
+   nome,
+   categoria,
+   sinopse,
+   assistido/ não assistido
+   }
+
+2. Rotas a serem criadas:
 
     - POST: Adicionar novo filme
     - GET: Recuperar filme
@@ -61,4 +68,40 @@ Queremos criar uma api para controlar os filmes que você quer assistir e que j�
     - PUT: Alterar informações do filme
     - PATCH: Marcar/Desmarcar filme como assistido
     
+    
+### DESAFIO API DE SÉRIES
+
+Durante a aula, fizemos juntas uma api para controlar os filmes que queremos assistir. Porém essa api só serve para filmes, e com as séries, como fica? Agora que já sabemos como criar uma lista de filmes, podemos também fazer uma api para controlar nossas séries com temporadas e seus episódios!
+
+Nessa api queremos poder cadastrar séries, cada uma com inúmeras temporadas e cada temporada com uma lista de epsódios. A estrutura de uma série ficaria dessa forma:
+
+Série: 
+{ 
+   nome,
+   categoria,
+   sinopse,
+   temporadas:[
+     {
+       numero,
+       epsodios: [ {
+         numero,
+         nome,
+         assistido/ não assistido
+       }
+       ]
+     } 
+   ]
+ }
+
+Para podermos controlar nossas séries, marcando os episódios já vistos como "assistido" iremos precisar implementar na nossa nova API de Séries as seguintes rotas:
+
+    - POST: Adicionar nova série
+    - GET: Recuperar série
+    - DELETE: remover série
+    - PUT: Alterar informações da série
+    - POST: Adicionar nova temporada a série
+    - GET: Recuperar temporada
+    - POST: Adicionar novo episódio a temporada
+    - GET: Recuperar episódio
+    - PATCH: Marcar/Desmarcar episódio como assistido
 
