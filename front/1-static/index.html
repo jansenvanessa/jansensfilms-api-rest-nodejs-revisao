@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Front - Exemplo</title>
+    <style>
+      body {
+        max-width: 1120px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      #tabela-lista {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      #tabela-lista td,
+      #tabela-lista th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #tabela-lista tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      #tabela-lista tr:hover {
+        background-color: #b382ba;
+      }
+
+      #tabela-lista th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #7e459b;
+        color: white;
+      }
+
+      #tabela-lista .selecionado {
+          background-color: #2eb82e !important;
+      }
+
+      #tabela-lista tr td:last-child {
+          background-color: #ffcc00;
+      }
+
+    </style>
+  </head>
+  <body>
+    <table id="tabela-lista">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Genre</th>
+          <th>Synopsis</th>
+          <th>Watched</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>1</td>
+              <td>Malévola</td>
+              <td>Aventura</td>
+              <td>Malévola, uma jovem de coração puro, vive em um pacífico reino</td>
+              <td class="selecionado">Sim</td>
+          </tr>
+          <tr>
+              <td>2</td>
+              <td>Um sonho possível</td>
+              <td>Drama</td>
+              <td>Michael Oher é negro, pobre, grandalhão e calado. Ele foi abandonado pela mãe e agora (...)</td>
+              <td>Não</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Jogos Vorazes</td>
+            <td>Aventura</td>
+            <td>Num futuro distante, boa parte da população é controlada por um regime totalitário, que (...)</td>
+            <td>Não</td>
+        </tr>
+      </tbody>
+
+      <tbody id="tabela-lista-corpo"></tbody>
+    </table>
+
+    <footer>meu teclado nao funciona o acento.</footer>
+
+    <script>
+      
+    </script>
+  </body>
+</html>
