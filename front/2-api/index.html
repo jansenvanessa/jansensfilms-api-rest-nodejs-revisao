@@ -109,7 +109,8 @@
           let itemDaLinhaSinopse = document.createElement("td");
           itemDaLinhaSinopse.innerHTML = element.synopsis;
           let itemDaLinhaVisto = document.createElement("td");
-          itemDaLinhaVisto.innerHTML = element.watched ? 'Sim' : 'Não';
+          itemDaLinhaVisto.innerHTML = element.watched ? "Sim" : "Não";
+          if (element.watched) itemDaLinhaVisto.className = "selecionado";
           linha.appendChild(itemDaLinhaId);
           linha.appendChild(itemDaLinhaNome);
           linha.appendChild(itemDaLinhaOpcao);
