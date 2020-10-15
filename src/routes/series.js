@@ -14,7 +14,7 @@ router.delete("/:id/season/:seasonId/episode/:episodeId", controller.deleteEpiso
 
 // put e patch - alteração
 router.put("/:id", controller.updateSerie) // ****
-router.patch("/season/:seasonId/episode/:episodeId/watched-status", controller.updateEpisodeWatchedStatus)
+router.patch("/:id/season/:seasonId/episode/:episodeId/watched", controller.updateEpisodeWatchedStatus)
 
 // get - recuperação
 router.get("/", controller.getAllSeries) // ****
