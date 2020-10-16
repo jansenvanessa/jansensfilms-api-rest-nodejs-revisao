@@ -3,7 +3,7 @@
     <p align="center">Reprograma - Semana 11 (Revisão)<p>
 </h1>
 
-Olá, sejam bem-vindas a Semana 11 de revisão! Meu nome é Vanessa Jansen, sou a instrutora da Reprograma e irei acompanhar vocês nessa semana.
+Olá, sejam bem-vindas a Semana 11 de revisão! Meu nome é Vanessa Jansen, sou instrutora da Reprograma e irei acompanhar vocês nessa semana.
 
 # Vamos recordar!
 
