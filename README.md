@@ -324,6 +324,11 @@ const createMovie = (req, res) => {
         }
     })
 }
+
+module.exports = {
+    createMovie,
+    getAllMovies,
+}
 ```
 De cara, na primeira linha que escrevemos, estamos importando uma biblioteca chamada fs. Essa biblioteca permite que você trabalhe com o sistema de arquivos em seu computador. Precisamos dela para escrever um novo filme no nosso arquivo *movies.json*. Entretanto, antes de utilizá-la, precisamos instalá-la na nossa aplicação. Para isso é necessário rodar no terminal o comando ```npm install fs --save```
 
@@ -348,6 +353,39 @@ Para testar via Postman, a rota POST que cria um novo filme na listagem filmes, 
 Ao clicar no botão *send*, enviaremos nosso novo filme para ser criado na nossa API. Dando certo, o filme que enviamos será retornado em tela para a gente.
 
 ### Criando a rota GET (by id)
+
+Para verificarmos nosso novo filme criado, o buscando pelo id 4 (o id do filme que criamos). Será necessário criar uma nova rota de GET que trará o filme, dado um id. No caso queremos que quando chamarmos a rota GET *http://localhost:3000/movies/4* nosso filme que acabamos de criar seja retornado.
+
+Para isso, no nosso arquivo de rotas de filmes (*routes/movies.js*), deveremos incluir a seguinte rota:
+
+```movies.js
+router.get("/:id", controller.getMovie)
+```
+Nessa rota informamos que será passado um valor de parâmetro na nossa rota que será o parâmetro id (ex: *http://localhost:3000/movies/4* ). Mais uma vez nosso controller ainda não possui a função que estamos chamando. Então no arquivo *controllers/movieController.js* deveremos implementar a função getMovie com o código abaixo:
+
+```movieController.js
+const getMovie = (req, res) => {
+    const movieId = req.params.id
+    const movieFound = movies.find((movie) => movie.id == movieId)
+    if (movieFound) {
+        res.status(200).send(movieFound)
+    } else {
+        res.status(404).send({ message: "Filme não encontrado" })
+    }
+}
+
+module.exports = {
+    createMovie,
+    getMovie,
+    getAllMovies,
+}
+```
+
+Nesse, atribuítmos o valor do parametro id (req.params.id) a constante *movieId*. Com isso sabemos o id que foi passado na requisição. Em seguida percorremos o array de filmes, verificando o id no filme (movie.id == movieId). Ao encontrar o filme com o id passado, o mesmo é atribuído a constante "movieFound". Se o "movieFound" tiver valor, em outras palavras, se o filme for encontrado por id, iremos responder a requisição com status 200 e enviaremos na resposta o filme encontrado. Senão, se ele não for encontrado, retornaremos um status 404 (NOT FOUND) na requisição, informando que o mesmo não foi encontrado. 
+
+### Testando a rota GET by id via Postman
+
+Para testar nossa rota GET passando o id como parâmetro, via Postman, deveremos clicar em New > Request. Com a nova requisição aberta, deveremos escolher na combobox o verbo HTTP *GET* e digitar *http://localhost:3000/movies/4* (escolhi o id 4 mas você pode testar com outros ids). Ao clicar no botão *send*, se você passou o id de um filme que existe na listagem, o mesmo deverá ser exibido como resposta. Mas caso você passe um id de um filme que não existe, ele deve retornar um status 404 informando que o filme não foi encontrado.
 
 ### Criando a rota PUT
 
