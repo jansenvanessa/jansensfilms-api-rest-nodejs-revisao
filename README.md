@@ -103,7 +103,23 @@ jansensfilms
 │   ├── routes
 ├── package.json
 ```
+## Criando o servidor
 
+Criaremos agora um arquivo chamado “server.js”. Nesse arquivo criaremos uma constante express que receberá o módulo express. Utilizaremos essa constante para configurar nossa aplicação
+
+```server.js
+const app = require("./src/app")
+const port = 3000;
+
+app.listen(port, () => {
+    console.log(`Servidor está rodando na porta ${port}`);
+});
+```
+
+Quando criamos o servidor utilizando o protocolo HTTP, definimos um callback que será executado sempre que recebermos uma requisição web. Nesse caso, esse callback seria executado quando o nosso servidor for iniciado e aparecerá a mensagem “Servidor está rodando na porta 3000”.
+
+
+## Criando o servidor
 ## Vamos criar nossa primeira rota GET!
 
 
