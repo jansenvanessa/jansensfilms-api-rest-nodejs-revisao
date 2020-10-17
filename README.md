@@ -83,11 +83,11 @@ O *--save* é necessário para especificar que esse pacote do express é uma dep
 
 Ao rodar a instalação do express, uma *pasta node_modules* com os pacotes do meu projeto será criada. Se reparar, dentro dessa pasta teremos uma pasta chamada “express”. Toda vez que você rodar o comando ``` npm install``` essa pasta node_modules será atualizada com as últimas atualizações conforme o que estiver configurado no arquivo *package.json*.
 
-## Criando o arquivo .gitignore
+### Criando o arquivo .gitignore
 
 Devemos criar na raíz do "jansensfilmes" o arquivo *.gitignore* e escrever nele ```node_modules/``` para o git nao trackear essa pasta para commit.
 
-## Criando a estrutura da nossa API
+### Criando a estrutura da nossa API
 
 Primeiramente, iremos criar uma pasta chamada “src” (de “source”) na raiz do nosso projeto, onde armazenaremos todos os códigos da aplicação. Dentro dessa, criaremos três pastas:
 
@@ -103,7 +103,7 @@ jansensfilms
 │   ├── routes
 ├── package.json
 ```
-## Criando o servidor
+### Criando o servidor
 
 Deveremos criar dentro de *src/* um arquivo chamado *app.js*. Nesse arquivo faremos as configurações da nossa aplicação. Inicializaremos configuraremos a mesma para utilizar o express. Nesse arquivo criaremos uma constante express que receberá o módulo express. Utilizaremos essa constante para configurar nossa aplicação:
 
@@ -138,15 +138,15 @@ app.listen(port, () => {
 
 Quando criamos o servidor utilizando o protocolo HTTP, definimos um callback que será executado sempre que recebermos uma requisição web. Nesse caso, esse callback seria executado quando o nosso servidor for iniciado e aparecerá a mensagem “Servidor está rodando na porta 3000”.
 
-## Testando o servidor
+### Testando o servidor
 
 Vamos testar nosso servidor? Para isso executaremos o comando ```node server.js``` no terminal. Ao executar o comando, a mensagem informando que o servidor está rodando será exibida.
 
-## Nodemon
+### Nodemon
 
 Caso você esteja com o servidor rodando e tente alterar algum arquivo, para que o servidor capte essas alterações será necessário reiniciá-lo manualmente. Porém é bem chato ficar fazendo isso. Para evitar esse tipo de problema, podemos utilizar o *nodemon* para inicializar nosso servidor. Para utilizá-lo, deveremos primeiramente instalá-lo rodando o comando ```npm install nodemon --save```. Com o nodemon instalado, para rodar nosso servidor o utilizando, deveremos utilizar o comando ```nodemon server.js```. Com isso nosso servidor será inicializado com o nodemon e você poderá editar seus arquivos sem precisar reiniciá-lo.
 
-## Scripts package.json
+### Scripts package.json
 
 Para não precisar ficar escrevendo ```nodemon server.js``` para inicializar o servidor, podemos ir no nosso arquivo *package.json* e editar o atributo "scripts" do json. Poderemos incluir um script de start, informando que quando ele for utilizado, executará o comando ```nodemon server.js```:
 
@@ -158,7 +158,7 @@ Para não precisar ficar escrevendo ```nodemon server.js``` para inicializar o s
 ```
 Dessa forma para inicializar o servidor, basta digitar ```npm start``` no terminal e pressionar enter, que o mesmo já chamará automaticamente o comando ```nodemon server.js```.
 
-## Vamos criar nossa primeira rota GET!
+### Vamos criar nossa primeira rota GET!
 
 Com o projeto configurado e com o servidor rodando, caso a gente tente executar no browser *http://localhost:3000*, vamos receber a mensagem “Cannot GET”. Isso significa que o nosso servidor ainda não está habilitado a devolver uma resposta do método GET no endereço “/“. Isso tudo porque ainda não definimos nenhuma rota no nosso projeto.
 
@@ -209,6 +209,66 @@ module.exports = app
 ```
 Agora com a rota desenvolvida, ao executarmos no browser *http://localhost:3000* não deverá mais apresentar o erro de GET.
 
+
+## Nova rota de GET para retornar os filmes
+
+A empresa Jansensfilmes acabou de te enviar uma base de dados de exemplo chamado *movies.json*. Essa contém uma listagem de filmes que deveremos trabalhar. Com a listagem em mãos, poderemos desenvolver uma rota GET que exibirá essa listagem toda vez que uma requisição para listar os filmes seja chamada.
+
+Para que nosso projeto fique organizado, iremos colocar o arquivo *movies.json* que você recebeu dentro da pasta *model*. Iremos, em seguida, na pasta *routes* e criaremos um arquivo chamado *movies.js*. Nesse, iremos armazenar todas as rotas referentes aos filmes. Nosso projeto deverá estar com a seguinte estrutura:
+
+```
+jansensfilms
+├── src
+│   ├── controller
+│   ├── model
+|       ├── movies.json
+│   ├── routes
+│       ├── index.js
+│       ├── movies.js
+|   ├── app.js
+├── package.json
+├── server.js
+```
+
+Primeiramente, deveremos informar a nossa aplicação que iremos utilizar as rotas que iremos criar para os filmes. Para isso deveremos abrir a pasta *src* e editar o arquivo *app.js* 
+
+Deveremos abrir a *routes* e editar o arquivo *movies.js* para definirmos a rota que irá listar todos os filmes que estão no arquivo *movies.json*. Para isso deveremos incluir o código abaixo:
+
+```
+const movies = require("./routes/movies")
+app.use("/movies", movies)
+```
+Estamos dizendo para a aplicação utilizar as rotas do arquivo *movies.js* e utilizar a rota "/movies" para executá-las. Isso significa que toda vez que você chamar *http://localhost:3000/movies*, as nossas rotas de movies serão chamadas. 
+
+Entretanto, ainda não escrevemos nenhuma rota. Para escrever nossa primeira rota que listará os filmes, deveremos abrir a pasta *routes* e editar o arquivo *movies.js*:
+
+```
+const express = require("express")
+const router = express.Router()
+const controller = require("../controllers/movieController")
+
+router.get("/", controller.getAllMovies)
+
+module.exports = router;
+```
+
+Nessa estamos dizendo que toda vez que for utilizado o verbo GET na chamada *http://localhost:3000/movies*, o *controller.getAllMovies* será executado. Mas que *controller.getAllMovies* é esse? Precisamos criar ele ainda, certo? Então vamos lá!
+
+Primeiramente deveremos criar nosso controller de filmes. Então na pasta *controllers* deveremos criar o arquivo *movieController.js*. Nesse, deveremos criar a função *getAllMovies* que estamos chamando na nossa rota de GET:
+
+```
+const movies = require("../models/movies.json")
+
+const getAllMovies = (req, res) => {
+    console.log(req.url)
+    res.status(200).send(movies)
+}
+
+module.exports = {
+    getAllMovies,
+}
+```
+Nesse arquivo atribuímos nosso json de filmes a uma constante que chamamos de "movies". Então ao chamar a função *getAllMovies* nós respondemos a requisição com o status 200, informando que deu tudo certo e enviando nosso json de filmes. Feito isso, nossa rota que lista todos os filmes está pronta!
 
 ## Testando nossa rota no Frontend
 
