@@ -52,7 +52,7 @@ Quando fazemos uma requisição na API (quando chamamos uma rota), como vamos sa
 
 Então na nossa API devemos informar o código ao responder as requisições feitas pelas rotas que desenvolvemos. Caso nossa resposta seja com sucesso, passamos então um status 200. Caso dê algum erro que foi ocasionado por responsabilidade do usuário, enviamos um erro 4xx. Por exemplo, se um usuário não tem permissão de acesso para chamar uma rota que criamos, devemos retornar para ele um status 401, que significa que ele não está autorizado. Porém caso dê algum erro que seja de responsabilidade da nossa API, poderemos retornar um status 500.
 
-# Projeto API Nodejs "Jansen's Filmes"
+# Projeto API Nodejs "Jansen's Films"
 
 Parabéns, você acaba de ser contratada por uma empresa de audio visual chamada Jansen's Films para desenvolver um novo produto que deverá ser lançado em breve. Nesse estágio inicial do produto, o mesmo consistirá em um aplicativo e uma página web onde o usuário poderá controlar uma lista com filmes que já assistiu e que gostaria de assistir.
 
@@ -118,8 +118,8 @@ Primeiramente, iremos criar uma pasta chamada “src” (de “source”) na rai
 ```
 jansensfilms
 ├── src
-│   ├── controller
-│   ├── model
+│   ├── controllers
+│   ├── models
 │   ├── routes
 ├── package.json
 ```
@@ -212,21 +212,26 @@ const app = express()
 //rotas
 const index = require("./routes/index")
 
-app.use(express.json());
+app.use(express.json())
 
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Origin", "*") // informo que minha api poderá ser chamada de qualquer lugar. Por um browser, por exemplo.
     res.header(
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept"
     )
-    next()
+    next() 
+    // como criei uma função dentro do app.use, preciso dar um "next()" para mandar ele seguir para a próxima middleware. 
+    // se eu não faço isso, a requisição vai ficar travada aí.
 })
 
 app.use("/", index)
 
 module.exports = app
 ```
+
+O *app.use* adiciona uma middleware na nossa aplicação. Por exemplo, quando fazemos ```app.use(express.json())```, estou dizendo que minha api irá trabalhar com json. Isso significa, por exemplo, que quando eu fizer um POST, minha api irá entender que vou receber um json.
+
 Agora com a rota desenvolvida, ao executarmos no browser *http://localhost:3000* não deverá mais apresentar o erro de GET.
 
 
@@ -239,8 +244,8 @@ Para que nosso projeto fique organizado, iremos colocar o arquivo *movies.json* 
 ```
 jansensfilms
 ├── src
-│   ├── controller
-│   ├── model
+│   ├── controllers
+│   ├── models
 |       ├── movies.json
 │   ├── routes
 │       ├── index.js
@@ -291,7 +296,7 @@ Nesse arquivo atribuímos nosso json de filmes a uma constante que chamamos de "
 
 ### Testando a rota GET no Frontend
 
-Os desenvolvedores Frontend enviou uma tela que eles desenvolveram para testarmos nossa rota de GET. O html deles chama nossa rota GET que lista os filmes. Para testarmos isso, deveremos rodar nosso servidor e abrir o arquivo *index.html* que foi enviado. O mesmo irá exibir os filmes contidos no nosso json de filmes.
+As desenvolvedoras Frontend enviaram uma tela que elas desenvolveram para testarmos nossa rota de GET. O html delas chama nossa rota GET que lista os filmes. Para testarmos isso, deveremos rodar nosso servidor e abrir o arquivo *index.html* que foi enviado. O mesmo irá exibir os filmes contidos no nosso json de filmes.
 
 ### Testando a rota GET via Postman
 
