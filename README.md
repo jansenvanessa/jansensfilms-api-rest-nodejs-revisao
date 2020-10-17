@@ -54,15 +54,59 @@ Então na nossa API devemos informar o código ao responder as requisições fei
 
 # Projeto API Nodejs "Jansen's Filmes"
 
-Parabéns, você acaba de ser contratada por uma empresa de audio visual chamada Jansen's Films para desenvolver um novo produto que deverá ser lançado em breve. Você será a desenvolvedora backend, que será responsável pelo desenvolvimento da api.
+Parabéns, você acaba de ser contratada por uma empresa de audio visual chamada Jansen's Films para desenvolver um novo produto que deverá ser lançado em breve. Nesse estágio inicial do produto, o mesmo consistirá em um aplicativo e uma página web onde o usuário poderá controlar uma lista com filmes que já assistiu e que gostaria de assistir.
 
-<imagem front com tabela>
+<imagem do projeto>
+    <imagem front com tabela>
+
+Você será a desenvolvedora backend responsável pelo desenvolvimento da API que deverá ser feito em Nodejs. Em paralelo, o time de Frontend irá desenvolver o aplicativo e a página web que irão se comunicar com a API que você irá desenvolver.
 
 ## Como criar uma nova API Nodejs?
 
-Primeiro, precisamos inicializar o nome package manager, que é o gerenciador de pacotes do Node. Para isso executaremos npm init no terminal. Pressionando “Enter”, serão exibidas uma sequência de perguntas que deverão ser preenchidas ou mantidas o valor padrão.
+Primeiro, para a construção do backend do nosso produto em Nodejs criaremos uma pasta chamada "jansensfilms". Abriremos a mesma no programa Visual Studio Code e inicializaremos o terminal nessa mesma pasta.
+
+### Iniciando a API Nodejs
+
+Com o terminal aberto na pasta "jansensfilms", para iniciar nossa API Nodejs, precisamos inicializar o *package manager*, que é o gerenciador de pacotes do Node. Para isso executaremos ```npm init``` no terminal. Pressionando “Enter”, serão exibidas uma sequência de perguntas que deverão ser preenchidas ou mantidas o valor padrão.
+
+<imagem do terminal>
+    
+Com isso um arquivo com o nome de package.json será criado. Esse arquivo é muito importante pois define que o nosso projeto como sendo Node.
+
+### Instalando o Express
+
+Feito isso, precisaremos instalar o Express no nosso projeto, que é um framework que nos trará facilidades. Para isso executaremos no terminal:
+
+``` npm install express --save ```
+
+O *--save* é necessário para especificar que esse pacote do express é uma dependência da nossa aplicação e que o nosso projeto obrigatoriamente precisa dela para funcionar. Quando uma outra pessoa baixar seu projeto, ao instalar as dependências, esse pacote também será instalado. Isso porque quando você usa o --save, esse pacote é referenciado em “dependencies” no arquivo package.json. A sessão “ dependencies”, desse arquivo, lista justamente as dependências do nosso projeto.
+
+Ao rodar a instalação do express, uma *pasta node_modules* com os pacotes do meu projeto será criada. Se reparar, dentro dessa pasta teremos uma pasta chamada “express”. Toda vez que você rodar o comando ``` npm install``` essa pasta node_modules será atualizada com as últimas atualizações conforme o que estiver configurado no arquivo *package.json*.
+
+## Criando o arquivo .gitignore
+
+Devemos criar na raíz do "jansensfilmes" o arquivo *.gitignore* e escrever nele ```node_modules/``` para o git nao trackear essa pasta para commit
+
+## Criando a estrutura da nossa API
+
+Primeiramente, iremos criar uma pasta chamada “src” (de “source”) na raiz do nosso projeto, onde armazenaremos todos os códigos da aplicação. Dentro dessa, criaremos três pastas:
+
+- [x] controller - para armazenar a lógica de controle da nossa api
+- [x] model - para armazenar os nosso modelos (ex: nossos filmes)
+- [x] routes - para armazenar as rotas
+
+```
+jansensfilms
+├── src
+│   ├── controller
+│   ├── model
+│   ├── routes
+├── package.json
+```
 
 ## Vamos criar nossa primeira rota GET!
+
+
 
 ## Testando nossa rota no Frontend
 
