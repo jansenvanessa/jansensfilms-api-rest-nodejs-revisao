@@ -150,7 +150,7 @@ Caso você esteja com o servidor rodando e tente alterar algum arquivo, para que
 
 Para não precisar ficar escrevendo ```nodemon server.js``` para inicializar o servidor, podemos ir no nosso arquivo *package.json* e editar o atributo "scripts" do json. Poderemos incluir um script de start, informando que quando ele for utilizado, executará o comando ```nodemon server.js```:
 
-```
+```package.json
 "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
@@ -164,7 +164,7 @@ Com o projeto configurado e com o servidor rodando, caso a gente tente executar 
 
 Vamos então criar a primeira rota da nossa API! Dentro da pasta *routes/* deveremos criar um arquivo chamado *index.js*. Nesse arquivo iremos criar nossa primeira rota GET. Nesse iremos definir que quando chamarmos *http://localhost:3000* a mesma será chamada:
 
-```
+```index.js
 const express = require("express")
 const router = express.Router()
 
@@ -179,13 +179,13 @@ module.exports = router
 ```
 Criamos nossa rota, porém ainda não fizemos nossa aplicação utilizá-la. Para isso temos que ir no arquivo *app.js*, definirmos uma constante para nossa rota "index" e setar para nossa aplicação utilizar:
 
-```
+```app.js
 const index = require("./routes/index")
 app.use("/", index)
 ```
 Nosso arquivo *app.js* deverá então ficar da seguinte forma:
 
-```
+```app.js
 const express = require("express")
 const app = express()
 
@@ -232,17 +232,16 @@ jansensfilms
 
 Primeiramente, deveremos informar a nossa aplicação que iremos utilizar as rotas que iremos criar para os filmes. Para isso deveremos abrir a pasta *src* e editar o arquivo *app.js* 
 
-Deveremos abrir a *routes* e editar o arquivo *movies.js* para definirmos a rota que irá listar todos os filmes que estão no arquivo *movies.json*. Para isso deveremos incluir o código abaixo:
-
-```
+```app.js
 const movies = require("./routes/movies")
 app.use("/movies", movies)
 ```
+
 Estamos dizendo para a aplicação utilizar as rotas do arquivo *movies.js* e utilizar a rota "/movies" para executá-las. Isso significa que toda vez que você chamar *http://localhost:3000/movies*, as nossas rotas de movies serão chamadas. 
 
-Entretanto, ainda não escrevemos nenhuma rota. Para escrever nossa primeira rota que listará os filmes, deveremos abrir a pasta *routes* e editar o arquivo *movies.js*:
+Entretanto, ainda não escrevemos nenhuma rota. Para escrever nossa primeira rota que listará os filmes, deveremos abrir a pasta *routes* e editar o arquivo *movies.js*: 
 
-```
+```movies.js
 const express = require("express")
 const router = express.Router()
 const controller = require("../controllers/movieController")
@@ -256,7 +255,7 @@ Nessa estamos dizendo que toda vez que for utilizado o verbo GET na chamada *htt
 
 Primeiramente deveremos criar nosso controller de filmes. Então na pasta *controllers* deveremos criar o arquivo *movieController.js*. Nesse, deveremos criar a função *getAllMovies* que estamos chamando na nossa rota de GET:
 
-```
+```movieController.js
 const movies = require("../models/movies.json")
 
 const getAllMovies = (req, res) => {
