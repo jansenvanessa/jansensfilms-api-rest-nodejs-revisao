@@ -389,7 +389,175 @@ Para testar nossa rota GET passando o id como parâmetro, via Postman, deveremos
 
 ### Criando a rota PUT
 
+Para alterarmos um filme existente no nosso arquivo *movies.json*, Deveremos implementar uma rota de PUT que deverá permitir realizar essa alteração. Para isso, no nosso arquivo de rotas de filmes (*routes/movies.js*), deveremos incluir a seguinte rota:
+
+```movies.js
+router.put("/:id", controller.updateMovie)
+```
+Nessa rota informamos que será passado um valor de parâmetro na nossa rota que será o parâmetro id (ex: *http://localhost:3000/movies/4* ). Deveremos ir então no arquivo *controllers/movieController.js* para implementar a função *updateMovie*, que ainda não existe, com o código abaixo:
+
+```movieController.js
+const updateMovie = (req, res) => {
+    try {
+        const movieId = req.params.id
+        const movieToUpdate = req.body //Pego o corpo da requisição com as alterações 
+
+        const movieFound = movies.find(movie => movie.id == movieId) // separo o filme que irei atualizar      
+        const movieIndex = movies.indexOf(movieFound) // separo o indice do filme no array de filmes
+
+        if (movieIndex >= 0) { // verifico se o filme existe no array de filmes
+            movies.splice(movieIndex, 1, movieToUpdate) //busco no array o filme, excluo o registro antigo e substituo pelo novo 
+        } else {
+            res.status(404).send({ message: "Filme não encontrado para ser atualizado" })
+        }
+
+        fs.writeFile("./src/models/movies.json", JSON.stringify(movies), 'utf8', function (err) { // gravo meu json de filmes atualizado
+            if (err) {
+                res.status(500).send({ message: err }) // caso dê erro retorno status 500
+            } else {
+                console.log("Arquivo de filmes atualizado com sucesso!")
+                const movieUpdated = movies.find(movie => movie.id == movieId) // separo o filme que modifiquei no array
+                res.status(200).send(movieUpdated) // envio o filme modificado como resposta
+            }
+        })
+    } catch (err) {
+        res.status(500).send({ message: err }) // caso dê erro retorno status 500
+    }
+}
+
+module.exports = {
+    createMovie,
+    updateMovie,
+    getMovie,
+    getAllMovies,
+}
+```
+
+### Testando a rota PUT via Postman
+
+Para testar, via Postman, a rota PUT que altera um filme na listagem filmes, deveremos clicar em New > Request. Com a nova requisição aberta, deveremos escolher na combobox o verbo HTTP *PUT* e digitar *http://localhost:3000/movies/4* (escolhi o id 4 mas poderia ter escolhido outro id qualquer existente na lista). Deveremos então, passar a nova informação filme que iremos atualizar. Para isso deveremos clicar em *body* e clicar em *raw*. Logo após trocar a combobox "text" para *JSON*. Isso significa que estamos definindo que iremos enviar um JSON para nossa API quando enviarmos a requisição. Deveremos então informar o seguinte JSON:
+
+```
+{
+    "id": 4,
+    "name": "The Old Guard",
+    "genre": "Ficção científica",
+    "synopsis": "The Old Guard é um filme de ação e ficção científica de super-heróis americano de 2020 dirigido por Gina (...)",
+    "watched": false
+}
+```
+Ao clicar no botão *send*, se você passou o id de um filme que existe na listagem, o mesmo deverá ser retornado com a alteração feita na resposta. Mas caso você passe um id de um filme que não existe, ele deve retornar um status 404 informando que o filme não foi encontrado para ser atualizado.
+
 ### Criando a rota PATCH
+
+Precisamos criar uma rota para alterar apenas o status de assistido do nosso filme. Com isso poderemos informar se ele foi assistido ou não. Deveremos então implementar uma rota de PATCH que deverá permitir realizar essa alteração. Para isso, no nosso arquivo de rotas de filmes (*routes/movies.js*), deveremos incluir a seguinte rota:
+
+```movies.js
+router.patch("/:id/watched", controller.updateWatchedStatus)
+```
+Nessa rota informamos que será passado um valor de parâmetro na nossa rota que será o parâmetro id (ex: *http://localhost:3000/movies/4/watched* ). Deveremos ir então no arquivo *controllers/movieController.js* para implementar a função *updateWatchedStatus*, que ainda não existe, com o código abaixo:
+
+```movieController.js
+const updateWatchedStatus = (req, res) => {
+    try {
+        const movieId = req.params.id // pego a informação do id no parametro da requisição
+        const watched = req.body.watched // pego a informação de watched no corpo da requisição. Ele terá valor true ou false, dependendo do que tiver sido passado
+
+        const movieToUpdate = movies.find(movie => movie.id == movieId) // separo o filme que irei mudar o status
+        const movieIndex = movies.indexOf(movieToUpdate) // identifico o índice do filme no meu array
+
+        if (movieIndex >= 0) { // verifico se o filme existe no array de filmes
+            movieToUpdate.watched = watched //atualizo o objeto com o novo status informando se foi assistido ou não
+            movies.splice(movieIndex, 1, movieToUpdate) // removo o filme pelo índice substituindo pelo novo
+        } else {
+            res.status(404).send({ message: "Filme não encontrado para informar se foi assistido ou não" })
+        }
+
+        fs.writeFile("./src/models/movies.json", JSON.stringify(movies), 'utf8', function (err) { // gravo meu json de filmes atualizado
+            if (err) {
+                res.status(500).send({ message: err })
+            } else {
+                console.log("Arquivo atualizado com sucesso!")
+                const movieUpdated = movies.find((movie) => movie.id == movieId) // separo o filme que modifiquei no array
+                res.status(200).send(movieUpdated) // envio o filme modificado como resposta
+            }
+        })
+    } catch (err) {
+        res.status(500).send({ message: err })
+    }
+}
+
+module.exports = {
+    createMovie,
+    updateMovie,
+    updateWatchedStatus,
+    getMovie,
+    getAllMovies,
+}
+```
+
+### Testando a rota PATCH via Postman
+
+Para testar, via Postman, a rota PATCH que altera o status de assistido do filme, deveremos clicar em New > Request. Com a nova requisição aberta, deveremos escolher na combobox o verbo HTTP *PATCH* e digitar *http://localhost:3000/movies/4* (escolhi o id 4 mas poderia ter escolhido outro id qualquer existente na lista). Deveremos então, passar a informação de que o filme foi assistido ou não para enviar junto na requisição. Para isso deveremos clicar em *body* e clicar em *raw*. Logo após trocar a combobox "text" para *JSON*. Deveremos então informar o seguinte JSON:
+
+```
+{
+	"watched" : true
+}
+```
+Ao clicar no botão *send*, se você passou o id de um filme que existe na listagem, o mesmo deverá ser retornado com a alteração de status feita na resposta. Mas caso você passe um id de um filme que não existe, ele deve retornar um status 404 informando que o filme não foi encontrado para ser atualizado.
+
+## Criando a rota de DELETE
+
+Precisamos criar uma rota para poder deletar um filme, dado um id. Deveremos então implementar uma rota de DELETE que deverá permitir deletar o filme da nossa listagem. Para isso, no nosso arquivo de rotas de filmes (*routes/movies.js*), deveremos incluir a seguinte rota:
+
+```movies.js
+router.delete("/:id", controller.deleteMovie)
+```
+Nessa rota informamos que será passado um valor de parâmetro na nossa rota que será o parâmetro id (ex: *http://localhost:3000/movies/4* ). Deveremos ir então no arquivo *controllers/movieController.js* para implementar a função *deleteMovie*, que ainda não existe, com o código abaixo:
+
+```movieController.js
+const deleteMovie = (req, res) => {
+    try {
+        const movieId = req.params.id
+        const movieFound = movies.find(movie => movie.id == movieId) // encontro o filme pelo id
+        const movieIndex = movies.indexOf(movieFound) // identifico o índice do filme no meu array
+
+        if (movieIndex >= 0) { // verifico se o filme existe no array de filmes
+            movies.splice(movieIndex, 1) // removo o filme pelo índice
+        } else {
+            res.status(404).send({ message: "Filme não encontrado para ser deletado" })
+        }
+
+        fs.writeFile("./src/models/movies.json", JSON.stringify(movies), 'utf8', function (err) { // gravo meu array de filmes sem o filme que deletei
+            if (err) {
+                res.status(500).send({ message: err })
+            } else {
+                console.log("Filme deletado com sucesso do arquivo!")
+                res.sendStatus(204)
+            }
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).send({ message: "Erro ao deletar o filme" })
+    }
+}
+
+module.exports = {
+    createMovie,
+    deleteMovie,
+    updateMovie,
+    updateWatchedStatus,
+    getMovie,
+    getAllMovies,
+}
+```
+
+### Testando a rota DELETE via Postman
+
+Para testar, via Postman, a rota DELETE que deleta um filme, deveremos clicar em New > Request. Com a nova requisição aberta, deveremos escolher na combobox o verbo HTTP *DELETE* e digitar *http://localhost:3000/movies/4* (escolhi o id 4 mas poderia ter escolhido outro id qualquer existente na lista). Ao clicar no botão *send*, se você passou o id de um filme que existe na listagem, deverá ser retornado um 204 NO CONTENT da API, informando que ok deu tudo certo, não tem nada para retornar. Mas caso você passe um id de um filme que não existe, ele deve retornar um status 404 informando que o filme não foi encontrado para ser deletado.
+
+
 
 
 
