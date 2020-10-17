@@ -557,7 +557,14 @@ module.exports = {
 
 Para testar, via Postman, a rota DELETE que deleta um filme, deveremos clicar em New > Request. Com a nova requisição aberta, deveremos escolher na combobox o verbo HTTP *DELETE* e digitar *http://localhost:3000/movies/4* (escolhi o id 4 mas poderia ter escolhido outro id qualquer existente na lista). Ao clicar no botão *send*, se você passou o id de um filme que existe na listagem, deverá ser retornado um 204 NO CONTENT da API, informando que ok deu tudo certo, não tem nada para retornar. Mas caso você passe um id de um filme que não existe, ele deve retornar um status 404 informando que o filme não foi encontrado para ser deletado.
 
+### API Pronta!
 
+Desenvolvemos todas as rotas necessárias para nosso produto do Jansen's Films. Criamos a rota de POST (que cria um novo filme), duas rotas de GET (uma para trazer todos os filmes e uma para trazer um filme dado o id), PUT (para alterar o filme), PATCH (para alterar o status de assistido do filme) e DELETE (para deletar o filme). Com todas as rotas desenvolvidas na nossa API de filmes, basta o pessoal do front terminar o desenvolvimento para termos o produto pronto para ser lançado!
 
+### Acabamos, e agora?
+
+Agora que nossa API está implementada, podemos e devemos exercitar! Será que podemos melhorar nosso código? Temos linhas se códigos repetidas que poderiam virar funções e serem reaproveitadas? Sempre há algo para melhorar, então fique a vontade para mexer e melhorar o código!
+
+Espero que tenha gostado da atividade e o segredo é praticar!!! Quanto mais exercícios fizer, melhor :) Abs e até mais!
 
 
