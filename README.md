@@ -61,6 +61,26 @@ Parabéns, você acaba de ser contratada por uma empresa de audio visual chamada
 
 Você será a desenvolvedora backend responsável pelo desenvolvimento da API que deverá ser feito em Nodejs. Em paralelo, o time de Frontend irá desenvolver o aplicativo e a página web que irão se comunicar com a API que você irá desenvolver.
 
+A listagem de filmes será no seguinte formato: ```{ nome, genero, sinopse, assistido/ não assistido }```
+
+O novo produto deverá:
+
+- [x] poder listar todos os filmes da lista do usuário
+- [x] poder adicionar um novo filme
+- [x] poder remover filme da lista
+- [x] poder alterar informações do filme
+- [x] poder marcar/desmarcar filme como assistido
+
+Sendo assim precisaremos criar 5 rotas:
+
+| Verbo  | Descrição da Rota                     |
+| ------ | --------------------------------------|
+| POST   | Adicionar novo filme                  |
+| GET    | Recuperar filme                       |
+| DELETE | Remover filme                         |
+| PUT    | Alterar informações do filme          |
+| PATCH  | Marcar/Desmarcar filme como assistido |
+
 ## Como criar uma nova API Nodejs?
 
 Primeiro, para a construção do backend do nosso produto em Nodejs criaremos uma pasta chamada "jansensfilms". Abriremos a mesma no programa Visual Studio Code e inicializaremos o terminal nessa mesma pasta.
@@ -210,7 +230,7 @@ module.exports = app
 Agora com a rota desenvolvida, ao executarmos no browser *http://localhost:3000* não deverá mais apresentar o erro de GET.
 
 
-## Nova rota de GET para retornar os filmes
+### Nova rota de GET para retornar os filmes
 
 A empresa Jansensfilmes acabou de te enviar uma base de dados de exemplo chamado *movies.json*. Essa contém uma listagem de filmes que deveremos trabalhar. Com a listagem em mãos, poderemos desenvolver uma rota GET que exibirá essa listagem toda vez que uma requisição para listar os filmes seja chamada.
 
@@ -269,10 +289,23 @@ module.exports = {
 ```
 Nesse arquivo atribuímos nosso json de filmes a uma constante que chamamos de "movies". Então ao chamar a função *getAllMovies* nós respondemos a requisição com o status 200, informando que deu tudo certo e enviando nosso json de filmes. Feito isso, nossa rota que lista todos os filmes está pronta!
 
-## Testando nossa rota no Frontend
+### Testando nossa rota no Frontend
 
-## Testando nossa rota via Postman
+Os desenvolvedores Frontend enviou uma tela que eles desenvolveram para testarmos nossa rota de GET. O html deles chama nossa rota GET que lista os filmes. Para testarmos isso, deveremos rodar nosso servidor e abrir o arquivo *index.html* que foi enviado. O mesmo irá exibir os filmes contidos no nosso json de filmes.
 
-## Criando demais rotas (POST, PUT, PATCH, GET (by id))
+### Testando nossa rota via Postman
 
-## Melhorando nosso código!
+Entretanto, nós como desenvolvedoras backend, não iremos utilizar o front para ficar testando nossas rotas no momento de desenvolvimento. Usaremos uma ferramenta para isso, chamada Postman. Essa ferramenta permite testar serviços RESTful por meio do envio de requisições HTTP e da análise do seu retorno. Você pode salvar todas as suas collections e facilitar o seu dia-a-dia como pessoa desenvolvedora!
+
+Para testar nossa rota GET de listagem de todos os filmes no Postman, deveremos clicar em New > Request. Com a nova requisição aberta, deveremos escolher na combobox o verbo HTTP *GET* e digitar *http://localhost:3000/movies*. Ao clicar no botão *send* o array de json com nossos filmes será exibido.
+
+### Criando a rota POST
+
+### Criando a rota GET (by id)
+
+### Criando a rota PUT
+
+### Criando a rota PATCH
+
+
+
