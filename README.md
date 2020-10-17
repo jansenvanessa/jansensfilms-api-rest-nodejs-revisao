@@ -15,7 +15,7 @@ Antigamente quando desenvolvíamos uma aplicação WEB, não existia uma separa�
 
 Nesse curso estamos aprendendo como fazer uma API REST, que é uma API Backend, que irá disponilizar rotas, para que o Frontend (tela), consiga se comunicar com a parte da lógica por trás (Backend). Para isso criamos "Endpoints" na nossa API Rest do Backend e deixamos disponíveis para serem utilizadas pelo Frontend. Em outras palavras, criamos possibilidades de ações que podem ser chamadas pelo Frontend.
 
-![api_rest](https://i.imgur.com/xUfQD3Y.png)
+![api_rest](https://i.imgur.com/NygVhKO.png)
 
 ### Exemplo
 
@@ -90,8 +90,6 @@ Primeiro, para a construção do backend do nosso produto em Nodejs criaremos um
 ### Iniciando a API Nodejs
 
 Com o terminal aberto na pasta "jansensfilms", para iniciar nossa API Nodejs, precisamos inicializar o *package manager*, que é o gerenciador de pacotes do Node. Para isso executaremos ```npm init``` no terminal. Pressionando “Enter”, serão exibidas uma sequência de perguntas que deverão ser preenchidas ou mantidas o valor padrão.
-
-<imagem do terminal>
     
 Com isso um arquivo com o nome de package.json será criado. Esse arquivo é muito importante pois define que o nosso projeto como sendo Node.
 
@@ -113,8 +111,8 @@ Devemos criar na raíz do "jansensfilmes" o arquivo *.gitignore* e escrever nele
 
 Primeiramente, iremos criar uma pasta chamada “src” (de “source”) na raiz do nosso projeto, onde armazenaremos todos os códigos da aplicação. Dentro dessa, criaremos três pastas:
 
-- [x] controller - para armazenar a lógica de controle da nossa api
-- [x] model - para armazenar os nosso modelos (ex: nossos filmes)
+- [x] controllers - para armazenar a lógica de controle da nossa api
+- [x] models - para armazenar os nosso modelos (ex: nossos filmes)
 - [x] routes - para armazenar as rotas
 
 ```
@@ -300,11 +298,15 @@ Nesse arquivo atribuímos nosso json de filmes a uma constante que chamamos de "
 
 As desenvolvedoras Frontend enviaram uma tela que elas desenvolveram para testarmos nossa rota de GET. O html delas chama nossa rota GET que lista os filmes. Para testarmos isso, deveremos rodar nosso servidor e abrir o arquivo *index.html* que foi enviado. O mesmo irá exibir os filmes contidos no nosso json de filmes.
 
+![front_end_filmes](https://i.imgur.com/Tgiqa31.png)
+
 ### Testando a rota GET via Postman
 
 Entretanto, nós como desenvolvedoras backend, não iremos utilizar o front para ficar testando nossas rotas no momento de desenvolvimento. Usaremos uma ferramenta para isso, chamada Postman. Essa ferramenta permite testar serviços RESTful por meio do envio de requisições HTTP e da análise do seu retorno. Você pode salvar todas as suas collections e facilitar o seu dia-a-dia como pessoa desenvolvedora!
 
 Para testar nossa rota GET de listagem de todos os filmes no Postman, deveremos clicar em New > Request. Com a nova requisição aberta, deveremos escolher na combobox o verbo HTTP *GET* e digitar *http://localhost:3000/movies*. Ao clicar no botão *send* o array de json com nossos filmes será exibido.
+
+![test_get_postman](https://i.imgur.com/Cby6pIZ.png)
 
 ### Criando a rota POST
 
@@ -359,6 +361,8 @@ Para testar via Postman, a rota POST que cria um novo filme na listagem filmes, 
 
 Ao clicar no botão *send*, enviaremos nosso novo filme para ser criado na nossa API. Dando certo, o filme que enviamos será retornado em tela para a gente.
 
+![test_post_postman](https://i.imgur.com/Yq3otnK.png)
+
 ### Criando a rota GET (by id)
 
 Para verificarmos nosso novo filme criado, o buscando pelo id 4 (o id do filme que criamos). Será necessário criar uma nova rota de GET que trará o filme, dado um id. No caso queremos que quando chamarmos a rota GET *http://localhost:3000/movies/4* nosso filme que acabamos de criar seja retornado.
@@ -393,6 +397,8 @@ Nesse, atribuítmos o valor do parametro id (req.params.id) a constante *movieId
 ### Testando a rota GET by id via Postman
 
 Para testar nossa rota GET passando o id como parâmetro, via Postman, deveremos clicar em New > Request. Com a nova requisição aberta, deveremos escolher na combobox o verbo HTTP *GET* e digitar *http://localhost:3000/movies/4* (escolhi o id 4 mas você pode testar com outros ids). Ao clicar no botão *send*, se você passou o id de um filme que existe na listagem, o mesmo deverá ser exibido como resposta. Mas caso você passe um id de um filme que não existe, ele deve retornar um status 404 informando que o filme não foi encontrado.
+
+![test_get_id_postman](https://i.imgur.com/H1d2lHT.png)
 
 ### Criando a rota PUT
 
@@ -455,6 +461,8 @@ Para testar, via Postman, a rota PUT que altera um filme na listagem filmes, dev
 ```
 Ao clicar no botão *send*, se você passou o id de um filme que existe na listagem, o mesmo deverá ser retornado com a alteração feita na resposta. Mas caso você passe um id de um filme que não existe, ele deve retornar um status 404 informando que o filme não foi encontrado para ser atualizado.
 
+![test_put_postman](https://i.imgur.com/t0PokjX.png)
+
 ### Criando a rota PATCH
 
 Precisamos criar uma rota para alterar apenas o status de assistido do nosso filme. Com isso poderemos informar se ele foi assistido ou não. Deveremos então implementar uma rota de PATCH que deverá permitir realizar essa alteração. Para isso, no nosso arquivo de rotas de filmes (*routes/movies.js*), deveremos incluir a seguinte rota:
@@ -514,6 +522,8 @@ Para testar, via Postman, a rota PATCH que altera o status de assistido do filme
 ```
 Ao clicar no botão *send*, se você passou o id de um filme que existe na listagem, o mesmo deverá ser retornado com a alteração de status feita na resposta. Mas caso você passe um id de um filme que não existe, ele deve retornar um status 404 informando que o filme não foi encontrado para ser atualizado.
 
+![test_patch_postman](https://i.imgur.com/LGqeSqd.png)
+
 ## Criando a rota de DELETE
 
 Precisamos criar uma rota para poder deletar um filme, dado um id. Deveremos então implementar uma rota de DELETE que deverá permitir deletar o filme da nossa listagem. Para isso, no nosso arquivo de rotas de filmes (*routes/movies.js*), deveremos incluir a seguinte rota:
@@ -564,11 +574,15 @@ module.exports = {
 
 Para testar, via Postman, a rota DELETE que deleta um filme, deveremos clicar em New > Request. Com a nova requisição aberta, deveremos escolher na combobox o verbo HTTP *DELETE* e digitar *http://localhost:3000/movies/4* (escolhi o id 4 mas poderia ter escolhido outro id qualquer existente na lista). Ao clicar no botão *send*, se você passou o id de um filme que existe na listagem, deverá ser retornado um 204 NO CONTENT da API, informando que ok deu tudo certo, não tem nada para retornar. Mas caso você passe um id de um filme que não existe, ele deve retornar um status 404 informando que o filme não foi encontrado para ser deletado.
 
+![test_delete_postman](https://i.imgur.com/XQshRFn.png)
+
 ### API Pronta!
 
 Desenvolvemos todas as rotas necessárias para nosso produto do Jansen's Films. Criamos a rota de POST (que cria um novo filme), duas rotas de GET (uma para trazer todos os filmes e uma para trazer um filme dado o id), PUT (para alterar o filme), PATCH (para alterar o status de assistido do filme) e DELETE (para deletar o filme). Com todas as rotas desenvolvidas na nossa API de filmes, basta o pessoal do front terminar o desenvolvimento para termos o produto pronto para ser lançado!
 
 ### Acabamos, e agora?
+
+![exercise](https://cdn.the-scientist.com/assets/articleNo/64934/iImg/29088/uploads/brainexercise_3.png)
 
 Agora que nossa API está implementada, podemos e devemos exercitar! Será que podemos melhorar nosso código? Temos linhas se códigos repetidas que poderiam virar funções e serem reaproveitadas? Sempre há algo para melhorar, então fique a vontade para mexer e melhorar o código!
 
