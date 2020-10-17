@@ -582,7 +582,7 @@ Desenvolvemos todas as rotas necessárias para nosso produto do Jansen's Films. 
 
 ### Acabamos, e agora?
 
-![exercise](https://cdn.the-scientist.com/assets/articleNo/64934/iImg/29088/uploads/brainexercise_3.png)
+![exercise](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQzkx9NbIzjUfe7io1-mvfkRybTZGH-C0RL0A&usqp=CAU)
 
 Agora que nossa API está implementada, podemos e devemos exercitar! Será que podemos melhorar nosso código? Temos linhas se códigos repetidas que poderiam virar funções e serem reaproveitadas? Sempre há algo para melhorar, então fique a vontade para mexer e melhorar o código!
 
