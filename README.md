@@ -105,7 +105,27 @@ jansensfilms
 ```
 ## Criando o servidor
 
-Criaremos agora um arquivo chamado “server.js”. Nesse arquivo criaremos uma constante express que receberá o módulo express. Utilizaremos essa constante para configurar nossa aplicação
+Deveremos criar dentro de *src/* um arquivo chamado *app.js*. Nesse arquivo faremos as configurações da nossa aplicação. Inicializaremos configuraremos a mesma para utilizar o express. Nesse arquivo criaremos uma constante express que receberá o módulo express. Utilizaremos essa constante para configurar nossa aplicação:
+
+```app.js
+const express = require("express")
+const app = express()
+
+app.use(express.json())
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    )
+    next()
+})
+
+module.exports = app
+```
+
+Criaremos agora, na raíz de "jansensfilms", um arquivo chamado “server.js” para configurarmos nosso servidor. Nesse arquivo criaremos uma constante *app* que receberá nossa aplicação express que criamos no arquivo *app.js*. No caso definimos a porta 3000 para o nosso servidor rodar quando for inicializado.
 
 ```server.js
 const app = require("./src/app")
@@ -118,8 +138,14 @@ app.listen(port, () => {
 
 Quando criamos o servidor utilizando o protocolo HTTP, definimos um callback que será executado sempre que recebermos uma requisição web. Nesse caso, esse callback seria executado quando o nosso servidor for iniciado e aparecerá a mensagem “Servidor está rodando na porta 3000”.
 
+## Testando o servidor
 
-## Criando o servidor
+Vamos testar nosso servidor? Para isso executaremos o comando ```node server.js``` no terminal. Ao executar o comando, a mensagem informando que o servidor está rodando será exibida. Porém caso a gente tente executar no browser http://localhost:3000, vamos receber a mensagem “Cannot GET”. Isso significa que o nosso servidor ainda não está habilitado a devolver uma resposta do método GET no endereço “/“. Isso tudo porque ainda não definimos nenhuma rota no nosso projeto.
+
+## Nodemon
+
+Caso você
+
 ## Vamos criar nossa primeira rota GET!
 
 
