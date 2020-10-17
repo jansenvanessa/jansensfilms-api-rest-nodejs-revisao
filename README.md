@@ -85,7 +85,7 @@ Ao rodar a instalação do express, uma *pasta node_modules* com os pacotes do m
 
 ## Criando o arquivo .gitignore
 
-Devemos criar na raíz do "jansensfilmes" o arquivo *.gitignore* e escrever nele ```node_modules/``` para o git nao trackear essa pasta para commit
+Devemos criar na raíz do "jansensfilmes" o arquivo *.gitignore* e escrever nele ```node_modules/``` para o git nao trackear essa pasta para commit.
 
 ## Criando a estrutura da nossa API
 
@@ -140,14 +140,74 @@ Quando criamos o servidor utilizando o protocolo HTTP, definimos um callback que
 
 ## Testando o servidor
 
-Vamos testar nosso servidor? Para isso executaremos o comando ```node server.js``` no terminal. Ao executar o comando, a mensagem informando que o servidor está rodando será exibida. Porém caso a gente tente executar no browser http://localhost:3000, vamos receber a mensagem “Cannot GET”. Isso significa que o nosso servidor ainda não está habilitado a devolver uma resposta do método GET no endereço “/“. Isso tudo porque ainda não definimos nenhuma rota no nosso projeto.
+Vamos testar nosso servidor? Para isso executaremos o comando ```node server.js``` no terminal. Ao executar o comando, a mensagem informando que o servidor está rodando será exibida.
 
 ## Nodemon
 
-Caso você
+Caso você esteja com o servidor rodando e tente alterar algum arquivo, para que o servidor capte essas alterações será necessário reiniciá-lo manualmente. Porém é bem chato ficar fazendo isso. Para evitar esse tipo de problema, podemos utilizar o *nodemon* para inicializar nosso servidor. Para utilizá-lo, deveremos primeiramente instalá-lo rodando o comando ```npm install nodemon --save```. Com o nodemon instalado, para rodar nosso servidor o utilizando, deveremos utilizar o comando ```nodemon server.js```. Com isso nosso servidor será inicializado com o nodemon e você poderá editar seus arquivos sem precisar reiniciá-lo.
+
+## Scripts package.json
+
+Para não precisar ficar escrevendo ```nodemon server.js``` para inicializar o servidor, podemos ir no nosso arquivo *package.json* e editar o atributo "scripts" do json. Poderemos incluir um script de start, informando que quando ele for utilizado, executará o comando ```nodemon server.js```:
+
+```
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  }
+```
+Dessa forma para inicializar o servidor, basta digitar ```npm start``` no terminal e pressionar enter, que o mesmo já chamará automaticamente o comando ```nodemon server.js```.
 
 ## Vamos criar nossa primeira rota GET!
 
+Com o projeto configurado e com o servidor rodando, caso a gente tente executar no browser *http://localhost:3000*, vamos receber a mensagem “Cannot GET”. Isso significa que o nosso servidor ainda não está habilitado a devolver uma resposta do método GET no endereço “/“. Isso tudo porque ainda não definimos nenhuma rota no nosso projeto.
+
+Vamos então criar a primeira rota da nossa API! Dentro da pasta *routes/* deveremos criar um arquivo chamado *index.js*. Nesse arquivo iremos criar nossa primeira rota GET. Nesse iremos definir que quando chamarmos *http://localhost:3000* a mesma será chamada:
+
+```
+const express = require("express")
+const router = express.Router()
+
+router.get("/", function (req, res) {
+    res.status(200).send({
+        title: "Reprograma - On7 Semana 11 - Projeto Revisão",
+        version: "1.0.0"
+    })
+})
+
+module.exports = router
+```
+Criamos nossa rota, porém ainda não fizemos nossa aplicação utilizá-la. Para isso temos que ir no arquivo *app.js*, definirmos uma constante para nossa rota "index" e setar para nossa aplicação utilizar:
+
+```
+const index = require("./routes/index")
+app.use("/", index)
+```
+Nosso arquivo *app.js* deverá então ficar da seguinte forma:
+
+```
+const express = require("express")
+const app = express()
+
+//rotas
+const index = require("./routes/index")
+
+app.use(express.json());
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    )
+    next()
+})
+
+app.use("/", index)
+
+module.exports = app
+```
+Agora com a rota desenvolvida, ao executarmos no browser *http://localhost:3000* não deverá mais apresentar o erro de GET.
 
 
 ## Testando nossa rota no Frontend
