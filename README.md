@@ -32,7 +32,7 @@ O protocolo HTTP define alguns verbos para as requisições que indicam uma aç�
 | POST       | É utilizado quando queremos criar uma informação por meio da api.                                                                    |
 | GET        | É utilizado quando queremos recuperar a representação de um recurso. Requisições utilizando esse verbo, devem retornar apenas dados. | 
 | PUT        | O verbo PUT é utilizado quando queremos alterar integralmente um recurso.                                                            |
-| PATCH      | O verbo PUT é utilizado quando queremos alterar parcialmente um recurso.                                                             |
+| PATCH      | O verbo PATCH é utilizado quando queremos alterar parcialmente um recurso.                                                             |
 | DELETE     | O verbo DELETE é utilizado quando queremos remover um recurso.                                                                       |
 
 ### PUT vs PATCH
